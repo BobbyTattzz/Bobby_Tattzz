@@ -36,6 +36,7 @@ const tattooImages = document.querySelectorAll('.tattoo-item img');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxClose = document.getElementById('lightbox-close');
+document.addEventListener("DOMContentLoaded", () => { ... })
 
 tattooImages.forEach(img => {
     img.addEventListener('click', () => {
@@ -62,6 +63,7 @@ digitalImages.forEach(img => {
         lightboxImg.src = img.src;
     });
 });
+
 // LIGHTBOX SUPPORT FOR MURAL PAGE
 const muralImages = document.querySelectorAll('.masonry-item img, .clothing-row img, .mural-box img');
 
@@ -71,3 +73,38 @@ muralImages.forEach(img => {
         lightboxImg.src = img.src;
     });
 });
+});
+
+// ARC CAROUSEL SCRIPT
+document.addEventListener("DOMContentLoaded", () => {
+
+  const items = document.querySelectorAll('.arc-item');
+  if (items.length === 0) return; // prevents errors if the page doesn't contain the carousel
+
+  let centerIndex = Math.floor(items.length / 2);
+
+  function updateArc() {
+    items.forEach((item, i) => {
+      item.classList.remove("left", "right", "active");
+
+      if (i < centerIndex) item.classList.add("left");
+      if (i > centerIndex) item.classList.add("right");
+      if (i === centerIndex) item.classList.add("active");
+    });
+  }
+
+  // Initial load
+  updateArc();
+
+  // Scroll wheel navigation
+  window.addEventListener("wheel", (e) => {
+    if (e.deltaY > 0 && centerIndex < items.length - 1) {
+      centerIndex++;
+    } else if (e.deltaY < 0 && centerIndex > 0) {
+      centerIndex--;
+    }
+    updateArc();
+  });
+
+});
+
